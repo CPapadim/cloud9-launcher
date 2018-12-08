@@ -16,6 +16,7 @@ const
   config = new Configstore(pkg.name, defaultConfig),
   app = express(),
 
+  isRHBU = !!config.get('req_hostname_as_session_url'),
   isHttps = !!config.get('ssl') || false,
   TIMEOUT_TIME = config.get('limitTime') || 5000, // limit runC9 time.
   ports = [],
@@ -50,14 +51,9 @@ app.use(bodyParser.urlencoded({
 
 /* Router */
 app.get('/', function(req, res) {
-  if (!!config.get('req_hostname_as_session_url')) {
-    const base_url = config.get('c9Host');
-  } else {
-    const base_url = req.hostname;
-  }
   res.render('index', {
     projects: projects,
-    url: `http${(isHttps)?'s':''}:\/\/${base_url}`
+    url: `http${(isHttps)?'s':''}:\/\/${(base_url)?req.hostname:config.get('c9Host')}`
   });
 });
 
