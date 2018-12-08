@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({
 
 /* Router */
 app.get('/', function(req, res) {
-  if (!!config.get('req_hostname_as_links_url')) {
+  if (!!config.get('req_hostname_as_session_url')) {
     const base_url = config.get('c9Host');
   } else {
     const base_url = req.hostname;
