@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({
 app.get('/', function(req, res) {
   res.render('index', {
     projects: projects,
-    url: `http${(isHttps)?'s':''}:\/\/${(base_url)?req.hostname:config.get('c9Host')}`
+    url: `http${(isHttps)?'s':''}:\/\/${(isRHBU)?req.hostname:config.get('c9Host')}`
   });
 });
 
